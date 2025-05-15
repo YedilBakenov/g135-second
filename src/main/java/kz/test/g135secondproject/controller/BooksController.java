@@ -1,8 +1,10 @@
 package kz.test.g135secondproject.controller;
 
+import kz.test.g135secondproject.db.DBConnector;
 import kz.test.g135secondproject.model.Book;
 import kz.test.g135secondproject.repository.BookRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +19,7 @@ import java.util.List;
 public class BooksController {
 
     private final BookRepository bookRepository;
+    private final DBConnector dbConnector;
 
     @GetMapping(value = "/")
     public String getIndex(Model model){
@@ -24,6 +27,9 @@ public class BooksController {
         List<Book> books = bookRepository.findAll();
 
         model.addAttribute("books", books);
+
+        dbConnector.geInfo();
+
         return "index";
     }
 
