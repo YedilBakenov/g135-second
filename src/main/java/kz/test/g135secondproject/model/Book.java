@@ -2,6 +2,7 @@ package kz.test.g135secondproject.model;
 
 
 import jakarta.persistence.*;
+import kz.test.g135secondproject.model2.Author;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,5 +31,11 @@ public class Book {
     @Column(name = "cost")
     private int cost;
 
+    @OneToOne
+    @JoinColumn(name = "image_book_id")
+    private ImageBook imageBook;
 
+    @ManyToOne
+    @JoinColumn(name = "library_id")
+    private Library library;
 }

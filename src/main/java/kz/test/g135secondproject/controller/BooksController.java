@@ -4,7 +4,7 @@ import kz.test.g135secondproject.db.DBConnector;
 import kz.test.g135secondproject.model.Book;
 import kz.test.g135secondproject.repository.BookRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,7 +24,7 @@ public class BooksController {
     @GetMapping(value = "/")
     public String getIndex(Model model){
 
-        List<Book> books = bookRepository.findAll();
+        List<Book> books = bookRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
 
         model.addAttribute("books", books);
 
