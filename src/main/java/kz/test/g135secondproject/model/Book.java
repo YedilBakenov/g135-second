@@ -2,11 +2,12 @@ package kz.test.g135secondproject.model;
 
 
 import jakarta.persistence.*;
-import kz.test.g135secondproject.model2.Author;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 @Entity
 @Table(name = "books")
@@ -38,4 +39,7 @@ public class Book {
     @ManyToOne
     @JoinColumn(name = "library_id")
     private Library library;
+
+    @ManyToMany
+    private List<City> cities;
 }

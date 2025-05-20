@@ -6,30 +6,24 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Entity
-@Table(name = "libraries")
+@Table(name = "cities")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Library {
-
+public class City {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @Column(name = "code")
+    private String code;
+
     @Column(name = "name")
     private String name;
 
-    @Column(name = "address")
-    private String address;
+    @Column(name = "count_people")
+    private int countPeople;
 
-    @Column(name = "count_place")
-    private int countPlace;
-
-    @OneToMany
-    private List<Book> book;
 }

@@ -62,6 +62,68 @@
                 <input type="hidden" name="id" th:value="${book.id}">
                 <button class="btn btn-danger btn-sm">DELETE BOOK</button>
             </form>
+
+            <div class="row">
+                <div class="col-6">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>CODE</th>
+                            <th>COUNT PEOPLE</th>
+                            <th>NAME</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <form action="/add-city" method="post">
+
+                            <input type="hidden" name="book_id" th:value="${book.id}">
+
+                            <tr th:each="city: ${cities}">
+                                <input type="hidden" name="city_id" th:value="${city.id}">
+                                <td th:text="${city.id}"></td>
+                                <td th:text="${city.code}"></td>
+                                <td th:text="${city.countPeople}"></td>
+                                <td th:text="${city.name}"></td>
+                                <td>
+                                    <button class="btn btn-sm btn-success"> >>> </button>
+                                </td>
+                            </tr>
+                        </form>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="col-6">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>CODE</th>
+                            <th>COUNT PEOPLE</th>
+                            <th>NAME</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <form action="/delete-city" method="post">
+
+                            <input type="hidden" name="book_id" th:value="${book.id}">
+
+                            <tr th:each="city: ${book.getCities()}">
+                                <input type="hidden" name="city_id" th:value="${city.id}">
+                                <td th:text="${city.id}"></td>
+                                <td th:text="${city.code}"></td>
+                                <td th:text="${city.countPeople}"></td>
+                                <td th:text="${city.name}"></td>
+                                <td>
+                                    <button class="btn btn-sm btn-danger"> <<< </button>
+                                </td>
+                            </tr>
+                        </form>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 </div>
