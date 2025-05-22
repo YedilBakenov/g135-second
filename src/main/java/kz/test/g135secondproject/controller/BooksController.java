@@ -3,9 +3,12 @@ package kz.test.g135secondproject.controller;
 import kz.test.g135secondproject.db.DBConnector;
 import kz.test.g135secondproject.model.Book;
 import kz.test.g135secondproject.model.City;
+import kz.test.g135secondproject.model3.Magazine;
 import kz.test.g135secondproject.repository.BookRepository;
 import kz.test.g135secondproject.repository.CItyRepository;
+import kz.test.g135secondproject.repository3.MagazineRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +26,7 @@ public class BooksController {
     private final BookRepository bookRepository;
     private final DBConnector dbConnector;
     private final CItyRepository cityRepository;
+    private final MagazineRepository magazineRepository;
 
     @GetMapping(value = "/")
     public String getIndex(Model model) {
@@ -92,5 +96,11 @@ public class BooksController {
 
         return "redirect:/details-book/" + book_id;
 
+    }
+
+    @PostMapping(value = "/add-magazine")
+    public String addBook(Magazine magazine) {
+        magazineRepository.save(magazine);
+        return "redirect:/";
     }
 }
