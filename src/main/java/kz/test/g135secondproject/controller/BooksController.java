@@ -28,6 +28,18 @@ public class BooksController {
     private final CItyRepository cityRepository;
     private final MagazineRepository magazineRepository;
 
+
+    @GetMapping(value = "/search")
+    public String getBooksByWord(@RequestParam String word,
+                                 Model model){
+        List<Book> books = bookRepository.findByOptionWord(word);
+        model.addAttribute("books", books);
+
+        return "index";
+
+    }
+
+
     @GetMapping(value = "/")
     public String getIndex(Model model) {
 
@@ -50,6 +62,15 @@ public class BooksController {
         model.addAttribute("cities", cities);
 
         return "details-page";
+    }
+
+    @GetMapping(value = "/get-by-name/{name}")
+    public String getBookByName(@PathVariable String name, Model model) {
+        Book book = bookRepository.findByName(name);
+
+        model.addAttribute("book", book);
+
+        return "details-page-book";
     }
 
     @PostMapping(value = "/update-book")

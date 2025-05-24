@@ -87,6 +87,7 @@
                     <th>DETAILS PAGE</th>
                     <th>DESCRIPTION</th>
                     <th style="width: 5%;">DETAILS</th>
+                    <th style="width: 5%;">FIND BY NAME</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -99,6 +100,7 @@
                     <td th:text="${'color: ' +b.imageBook.colorPage + '/font: ' + b.imageBook.mainFont}"></td>
                     <td th:text="${b.description}"></td>
                     <td><a class="btn btn-secondary btn-sm" th:href="@{'/details-book/' + ${b.id}}">DETAILS</a></td>
+                    <td><a class="btn btn-secondary btn-sm" th:href="@{'/get-by-name/' + ${b.name}}">DETAILS</a></td>
                 </tr>
                 </tbody>
             </table>
@@ -113,6 +115,7 @@
             <button class="btn btn-sm btn-success">ADD</button>
         </form>
     </div>
+
 </div>
 </body>
 </html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <div th:insert="links.html"></div>
+</head>
+<body>
+<div th:insert="nav.html"></div>
+<div class="container mt-3">
+    <div class="row justify-content-center">
+        <div class="col-6">
+            <input type="text" th:value="${book.name}" class="form-control">
+            <input type="text" th:value="${book.author}" class="form-control">
+            <input type="text" th:value="${book.cost}" class="form-control">
+            <input type="text" th:value="${book.description}" class="form-control">
+        </div>
+    </div>
+</div>
+</body>
+</html>
