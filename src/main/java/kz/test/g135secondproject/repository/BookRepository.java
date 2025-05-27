@@ -12,9 +12,12 @@ import java.util.List;
 @Transactional
 public interface BookRepository extends JpaRepository<Book, Long> {
     Book findByName(String name);
+    Book findByAuthor(String author);
+    Book findBookByAuthorAndCost(String author, int cost);
+    Book findBookByAuthorOrCost(String author, int cost);
 
-    @Query("SELECT book FROM Book book " +
-            "WHERE book.name ilike concat('%', :word, '%') " +
-            "OR book.author ilike concat('%', :word, '%')")
-    List<Book>findByOptionWord(String word);
+    @Query("SELECT b FROM Book b WHERE " +
+            "b.name ilike concat('%', :word, '%') " +
+            "OR b.author ilike concat('%', :word, '%')")
+    List<Book>searchByWord(String word);
 }

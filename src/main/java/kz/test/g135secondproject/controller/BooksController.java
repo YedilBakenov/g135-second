@@ -7,15 +7,14 @@ import kz.test.g135secondproject.model3.Magazine;
 import kz.test.g135secondproject.repository.BookRepository;
 import kz.test.g135secondproject.repository.CItyRepository;
 import kz.test.g135secondproject.repository3.MagazineRepository;
+import kz.test.g135secondproject.service.BookService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,27 +22,29 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BooksController {
 
-    private final BookRepository bookRepository;
     private final DBConnector dbConnector;
     private final CItyRepository cityRepository;
     private final MagazineRepository magazineRepository;
 
+    @Autowired
+    @Qualifier("primary")
+    private BookService bookService;
 
-    @GetMapping(value = "/search")
-    public String getBooksByWord(@RequestParam String word,
-                                 Model model){
-        List<Book> books = bookRepository.findByOptionWord(word);
-        model.addAttribute("books", books);
+
+    @GetMapping(value = "/search-by-word")
+    public String getBooks(@RequestParam String word,
+                           Model model){
+        model.addAttribute("books",
+               bookService.searchByWord(word));
 
         return "index";
-
     }
 
 
     @GetMapping(value = "/")
     public String getIndex(Model model) {
 
-        List<Book> books = bookRepository.findAll(Sort.by(Sort.Direction.ASC, "id"));
+        List<Book> books = bookService.findAllBooks();
 
         model.addAttribute("books", books);
 
@@ -54,7 +55,7 @@ public class BooksController {
 
     @GetMapping(value = "/details-book/{id}")
     public String getDetailsPage(@PathVariable long id, Model model) {
-        Book book = bookRepository.findById(id).get();
+        Book book = bookService.findBookById(id);
         List<City> cities = cityRepository.findAll();
         cities.removeAll(book.getCities());
 
@@ -66,28 +67,35 @@ public class BooksController {
 
     @GetMapping(value = "/get-by-name/{name}")
     public String getBookByName(@PathVariable String name, Model model) {
-        Book book = bookRepository.findByName(name);
+        Book book = bookService.findByName(name);
 
         model.addAttribute("book", book);
 
         return "details-page-book";
     }
 
+    @GetMapping(value = "/by-author/{author}")
+    public String getBookByAuthor(@PathVariable String author, Model model){
+        model.addAttribute("book", bookService.findByAuthor(author));
+
+        return "details-page-book";
+    }
+
     @PostMapping(value = "/update-book")
     public String updateBook(Book book) {
-        bookRepository.save(book);
+        bookService.updateBook(book);
         return "redirect:/";
     }
 
     @PostMapping(value = "/add-book")
     public String addBook(Book book) {
-        bookRepository.save(book);
+        bookService.saveBook(book);
         return "redirect:/";
     }
 
     @PostMapping(value = "/delete-book")
     public String deleteBook(@RequestParam long id) {
-        bookRepository.deleteById(id);
+        bookService.deleteBookById(id);
         return "redirect:/";
     }
 
@@ -95,12 +103,12 @@ public class BooksController {
     public String addCityToBook(@RequestParam long book_id,
                                 @RequestParam long city_id) {
 
-        Book book = bookRepository.findById(book_id).get();
+        Book book = bookService.findBookById(book_id);
         City city = cityRepository.findById(city_id).get();
 
         book.getCities().add(city);
 
-        bookRepository.save(book);
+        bookService.saveBook(book);
 
         return "redirect:/details-book/" + book_id;
     }
@@ -109,11 +117,11 @@ public class BooksController {
     public String deleteCity(@RequestParam long book_id,
                              @RequestParam long city_id) {
 
-        Book book = bookRepository.findById(book_id).get();
+        Book book = bookService.findBookById(book_id);
         City city = cityRepository.findById(city_id).get();
 
         book.getCities().remove(city);
-        bookRepository.save(book);
+        bookService.saveBook(book);
 
         return "redirect:/details-book/" + book_id;
 

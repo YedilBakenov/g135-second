@@ -88,6 +88,7 @@
                     <th>DESCRIPTION</th>
                     <th style="width: 5%;">DETAILS</th>
                     <th style="width: 5%;">FIND BY NAME</th>
+                    <th style="width: 5%;">FIND BY AUTHOR</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -101,6 +102,7 @@
                     <td th:text="${b.description}"></td>
                     <td><a class="btn btn-secondary btn-sm" th:href="@{'/details-book/' + ${b.id}}">DETAILS</a></td>
                     <td><a class="btn btn-secondary btn-sm" th:href="@{'/get-by-name/' + ${b.name}}">DETAILS</a></td>
+                    <td><a class="btn btn-secondary btn-sm" th:href="@{'/by-author/' + ${b.author}}">DETAILS</a></td>
                 </tr>
                 </tbody>
             </table>
