@@ -36,7 +36,7 @@ public class BookServiceTestImpl implements BookService {
     }
 
     @Override
-    public Book findByAuthor(String author) {
+    public List<Book> findByAuthor(String author) {
         return bookRepository.findByAuthor(author);
     }
 

@@ -16,7 +16,7 @@ public interface BookService {
 
     Book findByName(String name);
 
-    Book findByAuthor(String author);
+    List<Book> findByAuthor(String author);
 
     void updateBook(Book book);
 

@@ -12,7 +12,7 @@ import java.util.List;
 @Transactional
 public interface BookRepository extends JpaRepository<Book, Long> {
     Book findByName(String name);
-    Book findByAuthor(String author);
+    List<Book>findByAuthor(String author);
     Book findBookByAuthorAndCost(String author, int cost);
     Book findBookByAuthorOrCost(String author, int cost);
 
