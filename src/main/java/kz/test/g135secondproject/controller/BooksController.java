@@ -5,6 +5,7 @@ import kz.test.g135secondproject.model.Book;
 import kz.test.g135secondproject.model.City;
 import kz.test.g135secondproject.model3.Magazine;
 import kz.test.g135secondproject.repository.CItyRepository;
+import kz.test.g135secondproject.repository.CustomBookRepository;
 import kz.test.g135secondproject.repository3.MagazineRepository;
 import kz.test.g135secondproject.service.BookService;
 import lombok.RequiredArgsConstructor;
