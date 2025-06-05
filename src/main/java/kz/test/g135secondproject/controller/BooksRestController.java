@@ -7,6 +7,10 @@ import kz.test.g135secondproject.service.BookService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -81,6 +85,33 @@ public class BooksRestController {
     @DeleteMapping(value = "/delete-book")
     public void deleteBook(@RequestParam long id) {
         bookService.deleteBookById(id);
+    }
+
+    @GetMapping(value = "/all-books-pagination")
+    public Page<Book> getAllBooksByPagination(@RequestParam(defaultValue = "0") int page,
+                                              @RequestParam(defaultValue = "2") int size,
+                                              @RequestParam(defaultValue = "id") String parameter,
+                                              @RequestParam(defaultValue = "asc") String direction){
+        Sort sort = direction.equalsIgnoreCase("desc")? Sort.by(parameter).descending(): Sort.by(parameter).ascending();
+
+        Pageable pageable = PageRequest.of(page, size, sort);
+
+        return bookService.getAllBooksByPagination(pageable);
+    }
+
+    @GetMapping(value = "/books-by-cost-pagination")
+    public Page<Book> getBooksByCostPagination(@RequestParam int cost,
+                                               @RequestParam(defaultValue = "0") int page,
+                                               @RequestParam(defaultValue = "1") int size,
+                                               @RequestParam(defaultValue = "cost") String parameter,
+                                               @RequestParam(defaultValue = "desc") String direction){
+
+        Sort sort = direction.equalsIgnoreCase("asc")? Sort.by(parameter).ascending(): Sort.by(parameter).descending();
+
+        Pageable pageable = PageRequest.of(page, size, sort);
+
+        return bookService.getBooksByCostAndPagination(cost, pageable);
+
     }
 
 

@@ -4,6 +4,8 @@ import kz.test.g135secondproject.model.Book;
 import kz.test.g135secondproject.repository.BookRepository;
 import kz.test.g135secondproject.service.BookService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -53,5 +55,15 @@ public class BookServiceImpl implements BookService {
     @Override
     public void deleteBookById(Long id) {
         bookRepository.deleteById(id);
+    }
+
+    @Override
+    public Page<Book> getAllBooksByPagination(Pageable pageable) {
+        return bookRepository.findAll(pageable);
+    }
+
+    @Override
+    public Page<Book> getBooksByCostAndPagination(int cost, Pageable p) {
+        return bookRepository.findByCostGreaterThan(cost, p);
     }
 }

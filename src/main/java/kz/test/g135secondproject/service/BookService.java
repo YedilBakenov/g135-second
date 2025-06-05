@@ -1,6 +1,8 @@
 package kz.test.g135secondproject.service;
 
 import kz.test.g135secondproject.model.Book;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,4 +25,8 @@ public interface BookService {
     void saveBook(Book book);
 
     void deleteBookById(Long id);
+
+    Page<Book>getAllBooksByPagination(Pageable p);
+
+    Page<Book> getBooksByCostAndPagination(int cost, Pageable p);
 }

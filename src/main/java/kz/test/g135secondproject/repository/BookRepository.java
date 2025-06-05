@@ -2,6 +2,8 @@ package kz.test.g135secondproject.repository;
 
 import jakarta.transaction.Transactional;
 import kz.test.g135secondproject.model.Book;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -20,4 +22,8 @@ public interface BookRepository extends JpaRepository<Book, Long> {
             "b.name ilike concat('%', :word, '%') " +
             "OR b.author ilike concat('%', :word, '%')")
     List<Book>searchByWord(String word);
+
+    Page<Book> findAll(Pageable pageable);
+
+    Page<Book> findByCostGreaterThan(int cost, Pageable p);
 }
