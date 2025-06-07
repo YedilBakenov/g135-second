@@ -91,7 +91,7 @@ public class BooksRestController {
     }
 
     @GetMapping(value = "/all-books-pagination")
-    public Page<Book> getAllBooksByPagination(@RequestParam(defaultValue = "0") int page,
+    public Page<BookDto> getAllBooksByPagination(@RequestParam(defaultValue = "0") int page,
                                               @RequestParam(defaultValue = "2") int size,
                                               @RequestParam(defaultValue = "id") String parameter,
                                               @RequestParam(defaultValue = "asc") String direction){
@@ -99,11 +99,11 @@ public class BooksRestController {
 
         Pageable pageable = PageRequest.of(page, size, sort);
 
-        return bookService.getAllBooksByPagination(pageable);
+        return bookMapper.toDtoPage(bookService.getAllBooksByPagination(pageable));
     }
 
     @GetMapping(value = "/books-by-cost-pagination")
-    public Page<Book> getBooksByCostPagination(@RequestParam int cost,
+    public Page<BookDto> getBooksByCostPagination(@RequestParam int cost,
                                                @RequestParam(defaultValue = "0") int page,
                                                @RequestParam(defaultValue = "1") int size,
                                                @RequestParam(defaultValue = "cost") String parameter,
@@ -113,7 +113,7 @@ public class BooksRestController {
 
         Pageable pageable = PageRequest.of(page, size, sort);
 
-        return bookService.getBooksByCostAndPagination(cost, pageable);
+        return bookMapper.toDtoPage(bookService.getBooksByCostAndPagination(cost, pageable));
 
     }
 

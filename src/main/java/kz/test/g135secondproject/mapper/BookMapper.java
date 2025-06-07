@@ -6,6 +6,7 @@ import kz.test.g135secondproject.model.Book;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 
 import java.util.List;
 
@@ -26,5 +27,9 @@ public interface BookMapper {
 
     List<Book>toEntityList(List<BookDto> dtoList);
 
+    default Page<BookDto> toDtoPage(Page<Book> bookPage) {
+        List<BookDto> dtoList = toDtoList(bookPage.getContent());
+        return new PageImpl<>(dtoList, bookPage.getPageable(), bookPage.getTotalElements());
+    }
 }
 
