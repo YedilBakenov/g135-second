@@ -1,6 +1,8 @@
 package kz.test.g135secondproject.controller;
 
 
+import kz.test.g135secondproject.dto.BookDto;
+import kz.test.g135secondproject.mapper.BookMapper;
 import kz.test.g135secondproject.model.Book;
 import kz.test.g135secondproject.repository.CustomBookRepository;
 import kz.test.g135secondproject.service.BookService;
@@ -22,54 +24,55 @@ public class BooksRestController {
     // get post put path option head delete
 
     private final CustomBookRepository customBookRepository;
+    private final BookMapper bookMapper;
 
     @Autowired
     @Qualifier("primary")
     private BookService bookService;
 
     @GetMapping
-    public List<Book> getAllBooks() {
-        return bookService.findAllBooks();
+    public List<BookDto> getAllBooks() {
+        return bookMapper.toDtoList(bookService.findAllBooks());
     }
 
     @GetMapping(value = "/more-cost")
-    public List<Book> getBooksMoreCost(@RequestParam int cost) {
+    public List<BookDto> getBooksMoreCost(@RequestParam int cost) {
 
-        return customBookRepository.findBooksMoreCost(cost);
+        return bookMapper.toDtoList(customBookRepository.findBooksMoreCost(cost));
     }
 
     @GetMapping(value = "/name-or-cost")
-    public List<Book> getBooksByCostOrName(@RequestParam(required = false) String name,
+    public List<BookDto> getBooksByCostOrName(@RequestParam(required = false) String name,
                                            @RequestParam(required = false) Integer cost) {
 
-        return customBookRepository.findByNameOrCost(name, cost);
+        return bookMapper.toDtoList(customBookRepository.findByNameOrCost(name, cost));
     }
 
     @GetMapping(value = "/sort")
-    public List<Book> sortedMethodByName() {
+    public List<BookDto> sortedMethodByName() {
 
-        return customBookRepository.sortBooksByName();
+        return bookMapper.toDtoList(customBookRepository.sortBooksByName());
     }
 
     @GetMapping(value = "/search-by-word")
-    public List<Book> getBooksByWord(@RequestParam String word) {
-        return bookService.searchByWord(word);
+    public List<BookDto> getBooksByWord(@RequestParam String word) {
+        return bookMapper.toDtoList(bookService.searchByWord(word));
     }
 
 
     @GetMapping(value = "/details-book/{id}")
-    public Book getBookById(@PathVariable long id) {
-        return bookService.findBookById(id);
+    public BookDto getBookById(@PathVariable long id) {
+        return bookMapper.toDto(bookService.findBookById(id));
     }
 
     @GetMapping(value = "/get-by-name/{name}")
-    public Book getByName(@PathVariable String name) {
-        return bookService.findByName(name);
+    public BookDto getByName(@PathVariable String name) {
+        return bookMapper.toDto(bookService.findByName(name));
     }
 
     @GetMapping(value = "/by-author/{author}")
-    public List<Book> getByAuthor(@PathVariable String author) {
-        return bookService.findByAuthor(author);
+    public List<BookDto> getByAuthor(@PathVariable String author) {
+        return bookMapper.toDtoList(bookService.findByAuthor(author));
     }
 
     @PutMapping(value = "/update-book")

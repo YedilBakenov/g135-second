@@ -1,5 +1,6 @@
 package kz.test.g135secondproject.service;
 
+import kz.test.g135secondproject.dto.BookDto;
 import kz.test.g135secondproject.model.Book;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -12,7 +13,7 @@ public interface BookService {
 
     List<Book> searchByWord(String word);
 
-    List<Book> findAllBooks();
+     List<Book> findAllBooks();
 
     Book findBookById(Long id);
 
@@ -29,4 +30,8 @@ public interface BookService {
     Page<Book>getAllBooksByPagination(Pageable p);
 
     Page<Book> getBooksByCostAndPagination(int cost, Pageable p);
+
+//    BookDto toDto(Book book);
+//
+//    List<BookDto> toDtoList();
 }

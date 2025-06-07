@@ -1,5 +1,6 @@
 package kz.test.g135secondproject.service.impl;
 
+import kz.test.g135secondproject.dto.BookDto;
 import kz.test.g135secondproject.model.Book;
 import kz.test.g135secondproject.repository.BookRepository;
 import kz.test.g135secondproject.service.BookService;
@@ -58,7 +59,7 @@ public class BookServiceTestImpl implements BookService {
     }
 
     @Override
-    public Page<Book> getAllBooksByPagination(Pageable pageable) {
+    public Page<Book> getAllBooksByPagination(Pageable p) {
         return null;
     }
 

@@ -1,5 +1,7 @@
 package kz.test.g135secondproject.service.impl;
 
+import kz.test.g135secondproject.dto.BookDto;
+import kz.test.g135secondproject.mapper.BookMapper;
 import kz.test.g135secondproject.model.Book;
 import kz.test.g135secondproject.repository.BookRepository;
 import kz.test.g135secondproject.service.BookService;
@@ -9,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service("primary")
@@ -16,6 +19,7 @@ import java.util.List;
 public class BookServiceImpl implements BookService {
 
     private final BookRepository bookRepository;
+    private final BookMapper bookMapper;
 
     @Override
     public List<Book> searchByWord(String word) {
@@ -66,4 +70,30 @@ public class BookServiceImpl implements BookService {
     public Page<Book> getBooksByCostAndPagination(int cost, Pageable p) {
         return bookRepository.findByCostGreaterThan(cost, p);
     }
+
+    //    public BookDto toDto(Book book){
+//        BookDto bookDto = new BookDto();
+//        bookDto.setId(book.getId());
+//        bookDto.setImageBook(book.getImageBook());
+//        bookDto.setSaveDateBook(book.getRegisterBook());
+//        bookDto.setUpdateDateBook(book.getUpdateBook());
+//        bookDto.setCost(book.getCost());
+//        bookDto.setAuthor(book.getAuthor());
+//        bookDto.setFullName(book.getName());
+//        bookDto.setDescription(book.getDescription());
+//
+//        return bookDto;
+//    }
+//
+//    @Override
+//    public List<BookDto> toDtoList() {
+//        List<Book> books = findAllBooks();
+//        List<BookDto> bookDtos = new ArrayList<>();
+//
+//        for(Book book: books){
+//            bookDtos.add(toDto(book));
+//        }
+//
+//        return bookDtos;
+//    }
 }

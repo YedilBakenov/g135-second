@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -39,6 +40,22 @@ public class Book {
     @ManyToOne
     @JoinColumn(name = "library_id")
     private Library library;
+
+    @Column(name = "register_book")
+    private LocalDate registerBook;
+
+    @Column(name = "update_book")
+    private LocalDate updateBook;
+
+    @PrePersist
+    public void registerBook(){
+        registerBook = LocalDate.now();
+    }
+
+    @PreUpdate
+    public void updateBook(){
+        updateBook = LocalDate.now();
+    }
 
     @ManyToMany
     private List<City> cities;
